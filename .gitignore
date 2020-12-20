@@ -1,0 +1,10 @@
+userInterface/node_modules
+userInterface/package-lock.json
+
+backendServer/node_modules
+backendServer/package-lock.json
+backendServer/Tesseract-OCR
+backendServer/__pycache__
+backendServer/Python38
+backendServer/nodejs
+backendServer/node.exe

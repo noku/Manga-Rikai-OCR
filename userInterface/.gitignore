@@ -1,0 +1,5 @@
+node_module/
+package-lock.json
+bundle.js
+fullPageScan.html
+evangelion2.jpg

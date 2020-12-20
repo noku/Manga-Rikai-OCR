@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* The Modal (background) */
+#popupPageContainer {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+#popupPage {
+  background-color: white;
+  margin: auto;
+  padding: 15px;
+  border: 1px solid #888;
+  width: 80%;
+  height: 80%;
+  display: flex;
+}
+
+.popupPageTextContainer {
+    width: 50%;
+    height: 100%;
+    border: 5px solid black;
+    margin: 5px;
+}
+
+.header {
+    background-color: white;
+    width: 100%;
+    height: 10%; 
+    border-bottom: 5px solid black;
+}
+
+.textArea {
+    background-color: white;
+    width: 99%;
+    height: 89%; 
+    overflow: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.textArea::-webkit-scrollbar {
+    display: none;
+}
+
+/* The Close Button */
+#closeButton {
+  color: black;
+  float: right;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+#closeButton:hover,
+#closeButton:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#instructionsList {
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    width: 70%;
+    height: 80%;
+    display: flex;
+}
+
+.instructionsImage {
+    max-width: 300px;
+    max-height: 150px;
+}
+
+#instructionsContainer1 {
+    width: 50%;
+    height: 100%;
+    word-wrap: break-word;
+}
+
+#instructionsContainer2 {
+    width: 50%;
+    height: 100%;
+    word-wrap: break-word;
+}
+
+#wholePage {
+    position: absolute;
+    top: 0;
+
+    width: 100%;
+    height: 250%;
+}
+
+#imageCanvas {
+    position:absolute;
+    top: 5%;
+    left: 15%;
+}
+
+#outlinesContainer {
+    position: absolute;
+    top: 5%;
+    left: 15%;
+    opacity: 0.5;
+}
+
+#overlayCanvas {
+    position:absolute;
+    top: 5%;
+    left: 15%;
+}
+
+#header {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    float:right;
+    width: 84%;
+    height: 3%;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    background-color: white;
+}
+
+#translationTextContainer {
+    position: absolute;
+
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+} 
+
+.textHolder {
+    margin: 5px;
+    height: 48%;
+    width: 55%;
+}
+
+.text {
+    margin: 5px;
+    background-color: white;
+}
+
+#trashBin {
+    float: right;
+    height: 100%;
+    width: 5%;
+}
+
+#toolBar {
+    position: absolute;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    
+    height: 39%;
+    width: 15%;
+
+    top: 0%;
+    float: left;
+    /* left: 85%; */
+
+    border-style: solid;
+    border-color: 5px solid black;
+    background-color: rgb(229, 241, 241);
+
+    text-align: center;
+}
+
+.fileInput {
+    position: relative;
+
+    height: 25%;
+    width: 100%;
+
+    padding-bottom: 5px;
+}
+
+button {
+    margin: 7px;
+    background-color: #d8e9d9; /* Green */
+    border-radius: 12px;
+    color: black;
+    padding: 8px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+}
+
+button:disabled {
+    background: #dddddd;
+}
+
+button:active {
+  background-color: #82dd86;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.retranslateButton {
+    margin: 10px;
+    background-color: #f7f7f7; /* Green */
+    border-radius: 12px;
+    color: black;
+    padding: 8px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+}
+
+.container {
+    border-bottom: 3px solid black;
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="popupPageContainer">
+    <div id="popupPage">
+        <div class="popupPageTextContainer">
+            <div class="header">
+                <button id="getSaveData">Get Save Data</button>
+                <button id="getAllSaveData">Get All Save Data</button>
+            </div>
+            <textarea id="displaySaveData" class="textArea"></textarea>
+        </div>
+        <div class="popupPageTextContainer">
+            <div class="header">
+                <button id="saveTranslation">Save Translation</button>
+                <button id="saveAllTranslation">Save All Translation</button>
+            </div>
+            <textarea id="displayTranslation" class="textArea"></textarea>
+        </div>
+        <span id="closeButton">&times;</span>
+    </div>
+</div>
+
+<div id="instructionsList">
+    <div id="instructionsContainer1">
+        <h4>Notes:</h4>
+        <ol>
+            <li>Feel free to join our Discord Group: https://discord.gg/BuNuanw</li>
+            <li>Try to not use Firefox as the default browser</li>
+            <li>In case of errors, try to turn off and on again</li>
+        </ol>
+        <h4>Make sure to close all windows:</h4>
+        <ol>
+            <img class="instructionsImage" src="ImagesFolder/closeEverthing.gif">
+        </ol>
+        <h4>Uploading Image:</h4>
+        <h1></h1>
+        <h5>Online Image:</h5>
+        <ol>
+            <li>Right Click an Online Image</li>
+            <li>Select "Copy Image"</li>
+            <li>Press "Control/CTRL V" anywhere on this Platform</li>
+            <li>You can do the same even when an image is displayed/uploaded</li>
+            <img class="instructionsImage" src="ImagesFolder/copyImage.png">
+        </ol>
+        <h5>Desktop Image:</h5>
+        <ol>
+            <li>Click "Choose File" button</li>
+            <li>Select one or multiple images</li>
+            <img class="instructionsImage" src="ImagesFolder/uploadMultipleImages.png">
+        </ol>
+        <h4>Upload Translation:</h4>
+        <ol>
+            <img class="instructionsImage" src="ImagesFolder/uploadTranslationFile.gif">
+        </ol>
+        <h4>Translate Text:</h4>
+        <ol>
+            <img class="instructionsImage" src="ImagesFolder/translateText.gif">
+        </ol>
+    </div>
+
+    <div id="instructionsContainer2">
+        <h4>Sample Workflows:</h4>
+        <ol>
+            <li>Load Image > Create Mode > Edit Mode > Read Mode (optional) > Save Translation</li>
+            <li>Load Image > Detect Textboxes > Translate Text > Edit Mode or Create Mode > Save Translation</li>
+        </ol>
+
+        <h4>Modes:</h4>
+        <h5>Create Mode:</h5>
+        <ol>
+            <li>Use your mouse to draw a rectangle around the text</li>
+            <li>The rectangle will capture the textbox image</li>
+            <li>Text inside will be extracted AND translated</li>
+            <img class="instructionsImage" src="ImagesFolder/cropImage.gif">
+        </ol>
+        <h5>Edit Mode:</h5>
+        <ol>
+            <li>Edit text by hovering on textbox then click on the text section you want (left or right)</li>
+            <img class="instructionsImage" src="ImagesFolder/editText.gif">
+            <li>Delete textbox by dragging it to the recycle bin</li>
+            <img class="instructionsImage" src="ImagesFolder/deleteTextbox.gif">
+        </ol>
+        <h5>Read Mode:</h5>
+        <ol>
+            <li>Hovering on created textboxes to read</li>
+            <img class="instructionsImage" src="ImagesFolder/readMode.gif">
+        </ol>
+    </div>
+
+</div>
+
+<div id="wholePage">
+    <canvas id="imageCanvas"></canvas>
+
+    <div id="outlinesContainer" display="none">
+        <!-- outlines will be injected here in read and edit mode -->
+    </div>
+
+
+    <canvas id="overlayCanvas" display="none"></canvas>
+
+
+    <div id="header">
+
+        <div id="translationTextContainer">
+            <div id="extractedTextHolder" class="textHolder">
+                <h3 id="extractedText" class="text" contenteditable="plaintext-only">Japanese</h3>
+            </div>
+    
+            <img id="trashBin" src="./ImagesFolder/recycleBin.jpg" ondrop="drop(event)" ondragover="allowDrop(event)"></img>
+
+            <div id="translatedTextHolder" class="textHolder">
+
+                <h3 id="translatedText" class="text" contenteditable="plaintext-only">Translation</h3>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="toolBar">
+        <div class="container">
+            <h4>Upload Images Here:</h4>
+            <input type="file" id="imageInput" class ="fileInput" name="file" accept="image/png, image/jpeg" multiple>
+        </div>
+
+        <div class="container">
+            <h3 id="ImageID">0/?</h3> 
+            <button id="backButton" class="button">Back</button>
+            <button id="nextButton" class="button">Next</button>
+        </div>
+
+        <div class="container">
+            <div id="createModeContainer" class="tooltip">
+                <button id="createMode">1. Create Mode</button>
+                <span class="tooltiptext">Drag your mouse to form a text rectangle</span>
+            </div>
+            <div id="editModeContainer" class="tooltip">
+                <button id="editMode">2. Edit Mode</button>
+                <span class="tooltiptext">Edit text and delete existing textbox</span>
+            </div>
+            <div id="readModeContainer" class="tooltip">
+                <button id="readMode">3. Read Mode</button>
+                <span class="tooltiptext">Hover your mouse on text box to read</span>
+            </div>
+        </div>
+        
+        <div class="container">
+            <h4>Upload Translation File:</h4>
+            <input type="file" id="translationFileInput" class ="fileInput" name="file" accept=".json">
+        </div>
+
+        <div id="imageConfigurationsContainer">
+            <div class="container">
+                <button id="detectTextboxesButton">1. Detect Textboxes</button>
+                <button id="translateTextButton">2. Translate Text</button>
+            </div>
+            <div class="container">
+                <button id="saveTranslationButton">A. Save Translation</button>
+                <h4>Don't forget to save</h4>
+            </div>
+        </div>
+
+        <div id="allImagesConfigurationsContainer">
+            <div class="container">
+                <button id="detectAllTextboxesButton">1. Detect All Textboxes</button>
+                <button id="translateAllTextButton">2. Translate All Text</button>
+            </div>
+            <div class="container">
+                <button id="saveAllTranslationButton">B. Save All Translation</button>
+                <h4>Don't forget to save</h4>
+            </div>
+        </div>
+
+        <button id="exportButton">Export</button>
+
+        <!-- <button id="saveImageButton">Save Image</button> -->
+
+
+    </div>
+
+</div>
+
+
+<script src="bundle.js"></script>
+
+</body>
+</html>

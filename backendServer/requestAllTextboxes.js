@@ -22,17 +22,39 @@
 //     return result
 // }
 
-const request = require('request');
+
+// const request = require('request');
+// const processListOfCoordinates = require("./processListOfCoordinates.js")
+
+// module.exports = async () => {
+//     let listOftextboxes = new Promise( (resolve, reject) => {request.post({url:'http://localhost:7575/'}, function optionalCallback(err, httpResponse, body) {
+//             if (err) {
+//                 return console.error('connection to flask server failed', err);
+//             }
+//             resolve(processListOfCoordinates(JSON.parse(body)))
+//         })
+//     })
+//     return listOftextboxes
+// } 
+
+
+const fetch = require('node-fetch');
 const processListOfCoordinates = require("./processListOfCoordinates.js")
 
 module.exports = async () => {
-    let listOftextboxes = new Promise( (resolve, reject) => {request.post({url:'http://localhost:7575/'}, function optionalCallback(err, httpResponse, body) {
-            if (err) {
-                return console.error('connection to flask server failed', err);
-            }
-            resolve(processListOfCoordinates(JSON.parse(body)))
-        })
-    })
-    return listOftextboxes
+    let listOftextboxes = await sendMessageToServer(7575, "no content", "detect all textboxes")
+    return processListOfCoordinates(listOftextboxes)
 } 
 
+async function sendMessageToServer(serverPort, thisContent, thisMessage) {  
+	const response = await fetch(`http://localhost:${serverPort}/`, {
+		method: 'POST', // or 'PUT'
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({content: thisContent, message: thisMessage})
+	})
+
+	const textData = await response.json()
+	return textData
+}

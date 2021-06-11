@@ -7,6 +7,7 @@ function recognize(filename, config = {}) {
   const binary = "Tesseract-OCR\\tesseract.exe"
 
   const command = [binary, `"${filename}"`, "stdout", ...options].join(" ")
+  console.log(command)
   if (config.debug) log("command", command)
 
   return new Promise((resolve, reject) => {

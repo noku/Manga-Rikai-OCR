@@ -1,0 +1,31 @@
+- The main backend server doesn't open (only user interface and one cmd.exe window opened)
+Reason: 
++ Window needs security permission to open the main backend server 
+Solution:
++ You will need to manually open it once when first using the program
++ Go to backendServer folder > click activateBackendServer.bat > give permission for the program to run
+
+
+- The computer vision server doesn't open (I have not observed this during on any computer I tested so chances are low)
+Reason:
++ Window needs security permission
+Solution: 
++ You will need to manually open it once when first using the program
++ Go to backendServer folder > click activateComputerVision.bat (different name than backend server) > give permission for the program to run (I guess private is ok too, but I choose public just in case)
+
+
+UnicodeDecodeError: "utf-8"codec can't decode byte 0xac in position 1: invalid start byte
+Reason: 
++ Your PC name is not in English
+Solution:
++ control panel > System > Computer Name > "To rename this computer click change" Change > OK 
+
+
+- The program just doesn't run 
+Reason: 
++ Read the error log on the server cmd.exe to see might be the cause
+Solution:
++ If your Window is new or you are not a gamer, you probably need to install VC_redist 2019 
++ If that still doesn't work, contact me on Discord about your case (https://discord.com/invite/BuNuanw)
+
+

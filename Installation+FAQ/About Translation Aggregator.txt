@@ -1,0 +1,7 @@
+To initialize this program after it is shown on the screen, you need to click on it.
+If you don't, for some reason, it just ignores copied text
+
+Click on Translation Aggregator, hover on some text boxes, rinse and repeat until it worked
+if it doesn't work or you feel annoyed, you can close it
+
+Hover on text boxes during Edit or Read Mode and the japanese text will be shown in it with meaning and romanji

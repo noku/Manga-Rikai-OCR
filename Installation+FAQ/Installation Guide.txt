@@ -1,0 +1,33 @@
+Click on Manga-Rikai.bat to run the program
+This bat file is basically a command to launch 3 different programs at the same time
+(for the curious folks, right click Manga-Rikai.bat and open with NotePad to see)
+
+
+When you clicked on it; three windows will open:
+- The user interface on your default browser (use chrome for the best performance)
+- The computer vision server on cmd.exe 
+- The main backend server on cmd.exe
+
+
+Techstacks: 
+- Front-end: HTML, CSS, Javascript, Webpack
+- Backend server: Nodejs, Tesseract engine
+- Computer Vision server: Python, Flask, OpenCV... (for traditional CV techniques, which is what currently being used), Keras+Tensorflow (DL model only work on Ubuntu but strangely not on Window, check my flask server for more details)
+
+Data Flow: User Interface => Backend Server => CV server (this is only for auto text detection)
+
+Note: I couldn't find way to bundle NodeJS and Flask server conveniently without breaking so I decided to ship both Node and Python run time in the program,
+which explains why the program is quite large 
+
+
+About Privacy:
+No, your data is not being sold to the devil or to M### Zuckerberg
+In fact, there is no data being collected at all
+The "servers" in the program acts simply as a medium to interact with the user interface in your browser
+The only info being sent to the internet is the Japanese text to Bing to be translated to English
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+
+### Instructions:
+To change settings: replace the corresponding line in "User-Settings.json" using notepad or notepad++
+If you want to change the language of the extracted text. Copy and paste one of the line below or modify to the language of your liking 
+PS: don't forget a comma at the end of the line, I included it for you just in case. Also, don't forget to save notepad or notepad++
+
+
+### Config Data:
+Bing Translation Code: 
+https://docs.microsoft.com/en-us/azure/cognitive-services/translator/language-support
+
+Tesseract-Text-Orientation:
+  3    Fully automatic orientation detection but not as accurate. 
+  5    Assume a single uniform block of vertically aligned text.
+  6    Assume a single uniform block of horizontally aligned text.
+
+
+### Preset:
+Japanese:
+"OCR-language": {"Name": "Japanese-Vertical", "Bing-Translation-Code": "ja", "Tesseract-Code":"jpn_vert", "Tesseract-Text-Orientation":"5", "Include-Space":false},
+or
+"OCR-language": {"Name": "Japanese-Horizontal", "Bing-Translation-Code": "ja", "Tesseract-Code":"jpn", "Tesseract-Text-Orientation":"6", "Include-Space":false},
+
+Chinese:
+"OCR-language": {"Name": "Chinese-Simplified-Vertical", "Bing-Translation-Code": "zh-Hans", "Tesseract-Code":"chi_sim_vert", "Tesseract-Text-Orientation":"5", "Include-Space":false},
+or
+"OCR-language": {"Name": "Chinese-Simplified--Horizontal", "Bing-Translation-Code": "zh-Hans", "Tesseract-Code":"chi_sim", "Tesseract-Text-Orientation":"6", "Include-Space":false},
+
+Korean:
+"OCR-language": {"Name": "Korean-Vertical", "Bing-Translation-Code": "ko", "Tesseract-Code":"kor_vert", "Tesseract-Text-Orientation":"5", "Include-Space":true},
+or
+"OCR-language": {"Name": "Korean-Horizontal", "Bing-Translation-Code": "ko", "Tesseract-Code":"kor", "Tesseract-Text-Orientation":"6", "Include-Space":true},
+
+English:
+"OCR-language": {"Name": "English", "Bing-Translation-Code": "en", "Tesseract-Code":"eng", "Tesseract-Text-Orientation":"6", "Include-Space":true},
+
+Portuguese:
+"OCR-language": {"Name": "Portuguese", "Bing-Translation-Code": "pt", "Tesseract-Code":"por", "Tesseract-Text-Orientation":"6", "Include-Space":true},
+
+
+### Support for other languages:
+Download your choice of OCR language pack here: https://github.com/tesseract-ocr/tessdata_best
+Drop it in backendServer/Tesseract-OCR/tessdata/
+Adjust the preset to your new language pack and update "User-Settings.json"

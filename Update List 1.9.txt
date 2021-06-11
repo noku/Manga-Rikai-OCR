@@ -1,0 +1,4 @@
+Fix Bing Translation
+Add experimental text-in-image overlay
+Make batch translation suitable with DeepL and any other translation services 
+Add github to folder for easy contribution 

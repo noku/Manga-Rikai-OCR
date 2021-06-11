@@ -1,5 +1,7 @@
 const ImagesDataCollection = require("./ImagesDataCollection.js")
 
+const OverlayCanvas = require("./Canvas/OverlayCanvas.js")
+const ImageCanvas = require("./Canvas/ImageCanvas.js")
 
 const OutLinesContainerDiv = require("./OutlinesContainerDiv.js")
 
@@ -12,8 +14,9 @@ class EditMode {
     }
 
     async turnOn(e) {
+        ImageCanvas.show()
+        OverlayCanvas.hide()
         this.turnOffButtonColor()
-        //this.outLinesContainerDiv.resizeContainerToFitCanvas()
         this.outLinesContainerDiv.showContainer()
         this.outLinesContainerDiv.removeAllPreviousOutlines()
         this.outLinesContainerDiv.injectAllEditModeOutlines(ImagesDataCollection.getCurrentSaveData().getListOfTextBoxes())

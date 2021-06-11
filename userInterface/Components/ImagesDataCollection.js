@@ -106,10 +106,15 @@ class ImageSaveData {
                 console.log("this is not a text box")
             }
             else {
-                let newX = coordinatesArray[0] - 10
-                let newY = coordinatesArray[1] - 10
-                let newWidth = coordinatesArray[2] + 15
-                let newHeight = coordinatesArray[3] + 15
+                let newX = coordinatesArray[0] 
+                let newY = coordinatesArray[1] 
+                let newWidth = coordinatesArray[2] 
+                let newHeight = coordinatesArray[3] 
+
+                // let newX = coordinatesArray[0] - 10
+                // let newY = coordinatesArray[1] - 10
+                // let newWidth = coordinatesArray[2] + 15
+                // let newHeight = coordinatesArray[3] + 15
   
                 let emptyText = "No text yet"
                 let convertedTextboxArray = [textboxID, newX, newY, newWidth, newHeight, emptyText, emptyText]
@@ -158,7 +163,7 @@ class ImagesDataCollection {
     initiateAndSaveAllNewImagesData(imagesCollection) {
         console.log("imageCollection", imagesCollection)
         this.reset()
-        let i = 0
+        let i = imagesCollection.length - 1
 
         for (const image of imagesCollection) {
             let imageObj = new Image();
@@ -166,14 +171,17 @@ class ImagesDataCollection {
             let imageFile = URLObj.createObjectURL(image);
             let imageName = image.name.split('.')[0];
 
-            this.listOfImagesData.push(new ImageSaveData(imageFile, imageName))
+            console.log("this.listOfImagesData", this.listOfImagesData)
             imageObj.src = imageFile
-            imageObj.onload =() => {
+            this.listOfImagesData.push(new ImageSaveData(imageFile, imageName))
+
+            imageObj.onload = () => {
                 this.listOfImagesData[i].saveImageSize(imageObj.width, imageObj.height)
-                i++
+                console.log("this image", i, imageObj.width, imageObj.height)
+                i--
             };
         }
-        //this.showID()
+        
         this.initiateFirstImage()
         
         console.log(this.listOfImagesData)

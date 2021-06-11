@@ -23,6 +23,12 @@ class RectangleOutline {
         this.mainContext.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
     }
 
+    fillWithWhiteColor(pointX,pointY,cropWidth,cropHeight) {
+        this.mainContext.clearRect(pointX,pointY,cropWidth,cropHeight);
+        this.mainContext.fillStyle = "white";
+        this.mainContext.fillRect(pointX, pointY, cropWidth, cropHeight);
+    }
+
     cropToImage(pointX,pointY,cropWidth,cropHeight){
         // create a temporary canvas sized to the cropped size
         const canvas1=document.createElement('canvas');
@@ -37,6 +43,26 @@ class RectangleOutline {
         //To display Image on Chrome for testing
         // const win = window.open();
         // win.document.write("<img src='"+canvas1.toDataURL()+"'/>");
+
+        //console.log(canvas1.toDataURL())
+        return canvas1.toDataURL();
+    }
+
+    showImage(pointX,pointY,cropWidth,cropHeight){
+        // create a temporary canvas sized to the cropped size
+        const canvas1=document.createElement('canvas');
+        const ctx1=canvas1.getContext('2d');
+        canvas1.width=cropWidth;
+        canvas1.height=cropHeight;
+        // use the extended from of drawImage to draw the
+        // cropped area to the temp canvas
+        ctx1.drawImage(this.imageCanvas.mainCanvas,pointX,pointY,cropWidth,cropHeight,0,0,cropWidth,cropHeight);
+        // return the .toDataURL of the temp canvas
+
+        //To display Image on Chrome for testing
+        // const win = window.open();
+        // win.document.write("<img src='"+canvas1.toDataURL()+"'/>");
+        document.getElementById("croppedImage").src = canvas1.toDataURL()
 
         //console.log(canvas1.toDataURL())
         return canvas1.toDataURL();

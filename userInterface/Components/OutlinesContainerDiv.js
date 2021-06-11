@@ -20,7 +20,12 @@ class OutLinesContainerDiv {
         outlinesList.forEach(outline => {
             this.injectOutline(new Textbox(outline).returnColorfulTextbox())
         });
-        
+    }
+
+    injectAllOverlayModeOutlines(outlinesList) {
+        outlinesList.forEach(outline => {
+            this.injectOutline(new Textbox(outline).returnOverlayTextbox())
+        });
     }
 
     removeAllPreviousOutlines() {
@@ -36,10 +41,9 @@ class OutLinesContainerDiv {
         this.container.style.display = "block"
     }
 
-    resizeContainerToFitCanvas() {
-        this.container.style.width = ImageCanvas.mainCanvas.width
-        console.log("resizeContainerToFitCanvas")
-        this.container.style.height = ImageCanvas.mainCanvas.height
+    resizeContainerToFitCanvas(width, height) {
+        this.container.style.width = `${width}px`
+        this.container.style.height = `${height}px`
     }
 }  
 

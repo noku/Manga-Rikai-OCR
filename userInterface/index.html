@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="html2canvas.min.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
+@font-face {
+    font-family: "mangaFont";
+    src: url("./CC-Wild-Words-Roman.ttf");
+    font-weight: bold;
+}
+
 h4 {
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 h3 {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 0;
+    display: inline-block;
 }
 
 /* The Modal (background) */
@@ -119,20 +125,24 @@ h3 {
 #imageCanvas {
     position:absolute;
     top: 5%;
-    left: 15%;
+    left: 20%;
+    border: 5px solid black;
 }
 
 #outlinesContainer {
     position: absolute;
     top: 5%;
-    left: 15%;
+    left: 20%;
     opacity: 0.5;
+    border: 5px solid black;
 }
 
 #overlayCanvas {
     position:absolute;
     top: 5%;
-    left: 15%;
+    left: 20%;
+    cursor: crosshair;
+    border: 5px solid black;
 }
 
 #header {
@@ -140,7 +150,7 @@ h3 {
     position: sticky;
     top: 0;
     float:right;
-    width: 84%;
+    width: 86%;
     height: 3%;
     border-bottom: 3px solid black;
     border-left: 3px solid black;
@@ -180,7 +190,7 @@ h3 {
     position: sticky;
     
     height: 39%;
-    width: 15%;
+    width: 13%;
 
     top: 0%;
     float: left;
@@ -222,6 +232,15 @@ button:active {
   background-color: #82dd86;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+.backNextButton {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #92ec98; /* Green */
+    color: white;
+    border-radius: 50%;
 }
 
 .tooltip {
@@ -269,6 +288,8 @@ button:active {
 </style>
 </head>
 <body>
+
+<canvas id="mockCanvas"></canvas>
 
 <div id="popupPageContainer">
     <div id="popupPage">
@@ -362,12 +383,13 @@ button:active {
 <div id="wholePage">
     <canvas id="imageCanvas"></canvas>
 
+    <canvas id="overlayCanvas" display="none"></canvas>
+
     <div id="outlinesContainer" display="none">
         <!-- outlines will be injected here in read and edit mode -->
     </div>
 
 
-    <canvas id="overlayCanvas" display="none"></canvas>
 
 
     <div id="header">
@@ -395,9 +417,11 @@ button:active {
         </div>
 
         <div class="container">
-            <h3 id="ImageID">0/?</h3> 
-            <button id="backButton" class="button">Back</button>
-            <button id="nextButton" class="button">Next</button>
+                <a href="#" id="backButton" class="backNextButton">&#8249;</a>
+                <h3 id="ImageID">0/?</h3> 
+                <a href="#" id="nextButton" class="backNextButton">&#8250;</a>
+            <!-- <button id="backButton" class="button">Back</button>
+            <button id="nextButton" class="button">Next</button> -->
         </div>
 
         <div class="container">
@@ -413,6 +437,14 @@ button:active {
                 <button id="readMode">3. Read Mode</button>
                 <span class="tooltiptext">Hover your mouse on text box to read</span>
             </div>
+            <div id="overlayContainer" class="tooltip">
+                <button id="overlayMode">4. Text Removal Mode</button>
+                <span class="tooltiptext">whiten out text boxes</span>
+            </div>
+            <div id="textOverlayContainer" class="tooltip">
+                <button id="textOverlayMode">5. Text Overlay Mode</button>
+                <span class="tooltiptext">Overlay translation on text boxes</span>
+            </div>
         </div>
         
         <div class="container">
@@ -420,7 +452,7 @@ button:active {
             <input type="file" id="translationFileInput" class ="fileInput" name="file" accept=".json">
         </div>
 
-        <div id="imageConfigurationsContainer">
+        <!-- <div id="imageConfigurationsContainer">
             <div class="container">
                 <button id="detectTextboxesButton">1. Detect Textboxes</button>
                 <button id="translateTextButton">2. Translate Text</button>
@@ -429,20 +461,23 @@ button:active {
                 <button id="saveTranslationButton">A. Save Translation</button>
                 <h4>Don't forget to save</h4>
             </div>
-        </div>
+        </div> -->
 
         <div id="allImagesConfigurationsContainer">
             <div class="container">
                 <button id="detectAllTextboxesButton">1. Detect All Textboxes</button>
                 <button id="translateAllTextButton">2. Translate All Text</button>
-            </div>
-            <div class="container">
                 <button id="saveAllTranslationButton">B. Save All Translation</button>
                 <h4>Don't forget to save</h4>
             </div>
         </div>
 
-        <button id="exportButton">Export</button>
+        <div class="container">
+            <button id="exportButton">Export as HTML</button>
+            <button id="exportTextRemovedButton">Export Text Removed</button>
+        </div>
+
+        <img id="croppedImage"> 
 
         <!-- <button id="saveImageButton">Save Image</button> -->
 
@@ -451,6 +486,7 @@ button:active {
 
 </div>
 
+<!-- <script type="text/javascript" src="html2canvas.min.js"></script> -->
 
 <script src="bundle.js"></script>
 

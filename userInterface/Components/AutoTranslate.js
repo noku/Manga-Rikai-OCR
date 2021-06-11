@@ -84,29 +84,30 @@ class TranslateAllText {
     }
 
     listen() {
-        document.getElementById("translateTextButton").onclick = () => {
-            this.resetContainer()
-            this.showPopupContainer()
-            this.disableTranslateAllImagesButtons()
-        }
+        // document.getElementById("translateTextButton").onclick = () => {
+        //     this.resetContainer()
+        //     this.showPopupContainer()
+        //     this.disableTranslateAllImagesButtons()
+        // }
+
+        // document.getElementById("getSaveData").onclick = () => {
+        //     this.displayAllExtractedText(ImagesDataCollection.getCurrentSaveData())
+        // }
+
+        // document.getElementById("saveTranslation").onclick = () => {
+        //     this.convertAndSaveTranslation(ImagesDataCollection.getCurrentSaveData(), this.convertTranslationTextToArray())
+        //     alert("Saving Completed")
+        // }
+
 
         document.getElementById("translateAllTextButton").onclick = async () => {
             this.resetContainer()
             this.showPopupContainer()
             this.disableTranslateOneImageButtons()
         }
-        
-        document.getElementById("getSaveData").onclick = () => {
-            this.displayAllExtractedText(ImagesDataCollection.getCurrentSaveData())
-        }
 
         document.getElementById("getAllSaveData").onclick = () => {
             this.displayAllImagesExtractedText()
-        }
-
-        document.getElementById("saveTranslation").onclick = () => {
-            this.convertAndSaveTranslation(ImagesDataCollection.getCurrentSaveData(), this.convertTranslationTextToArray())
-            alert("Saving Completed")
         }
 
         document.getElementById("saveAllTranslation").onclick = () => {
@@ -153,7 +154,8 @@ class TranslateAllText {
         for (const textbox of currentSaveData) {
             let id = textbox[0]
             let extractedText = textbox[1][5]
-            arrayOfAllExtractedText.push([`${id}:${extractedText}`])
+            // arrayOfAllExtractedText.push([`${id}:${extractedText}`])
+            arrayOfAllExtractedText.push([`${extractedText}`])
         }
 
         return arrayOfAllExtractedText
@@ -171,17 +173,30 @@ class TranslateAllText {
     async displayAllImagesExtractedText() {
         for (const image of ImagesDataCollection.getListOfImages()) {
             await this.displayAllExtractedText(image)
-            document.getElementById("displaySaveData").value += "ooo" + this.blankLine
+            document.getElementById("displaySaveData").value += "#" + this.blankLine
         }
     }
 
     convertAndSaveTranslation(imageData, translationArray) {
-        for (const stringElement of translationArray) {
-            let textboxID = stringElement.split(":",2)[0]
-            let translateText = stringElement.split(":",2)[1]
-            if (imageData.checkIfTextboxExists(`${textboxID}`)) {
-                imageData.saveTranslatedText(`${textboxID}`, translateText)
+        if (translationArray.length !== imageData.getNumberOfTextBoxes()) {
+            alert("Number of translation doesn't match number of text boxes")
+        }
+        else {
+            let index = 0
+            for (const textbox of imageData.getListOfTextBoxes()) {
+                let translateText = translationArray[index]
+                console.log("textbox", textbox)
+                imageData.saveTranslatedText(textbox[0], translateText)
+                index++
             }
+
+            // for (const stringElement of translationArray) {
+            //     let textboxID = stringElement.split(":",2)[0]
+            //     let translateText = stringElement.split(":",2)[1]
+            //     if (imageData.checkIfTextboxExists(`${textboxID}`)) {
+            //         imageData.saveTranslatedText(`${textboxID}`, translateText)
+            //     }
+            // }
         }
     }
 
@@ -206,7 +221,7 @@ class TranslateAllText {
         let allImagesTranslationArray = []
         let allTranslationOfAnImageArray = []
         for (const line of translationLinesArray) {
-            if (line == "ooo") {
+            if (line == "#") {
                 allImagesTranslationArray.push(allTranslationOfAnImageArray)
                 allTranslationOfAnImageArray = []
             }
@@ -268,13 +283,14 @@ class AutoTranslate {
             await startTextDetection()
         }
 
-        ModeSwitch.editModeActivate()
+        //ModeSwitch.editModeActivate()
+
     }
 
     listen() {
-        this.detectTextboxes.button.addEventListener("click", async (e) => {
-            this.detextAndExtractText()
-        })
+        // this.detectTextboxes.button.addEventListener("click", async (e) => {
+        //     this.detextAndExtractText()
+        // })
 
         this.translateAllText.listen()
 

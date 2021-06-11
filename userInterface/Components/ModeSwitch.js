@@ -4,13 +4,12 @@ const ImagesDataCollection = require("./ImagesDataCollection.js")
 const ReadMode = require("./ReadMode.js")
 const CreateMode = require("./CreateMode.js")
 const EditMode = require("./EditMode.js")
-
+const OverlayMode = require("./OverlayMode.js")
+const TextOverlayMode = require("./TextOverlayMode.js")
 
 class ModeSwitch {
-    constructor(ReadModeClass, CreateModeClass, EditModeClass) {
-        this.readMode = ReadModeClass
-        this.createMode = CreateModeClass
-        this.editMode = EditModeClass
+    constructor() {
+        this.currentMode = "Create Mode"
     }
 
 
@@ -18,25 +17,73 @@ class ModeSwitch {
         this.listenForCreateModeActivation()
         this.listenForReadModeActivation()
         this.listenForEditModeActivation()
+        this.listenForOverlayModeActivation() 
+        this.listenForTextOverlayModeActivation() 
     }
 
-
     listenForCreateModeActivation() {
-        this.createMode.button.addEventListener("click", (e) => {
+        CreateMode.button.addEventListener("click", (e) => {
             this.createModeActivate()
         })
     }
 
     listenForEditModeActivation() {
-        this.editMode.button.addEventListener("click", (e) => {
+        EditMode.button.addEventListener("click", (e) => {
             this.editModeActivate()
         })
     }
 
     listenForReadModeActivation() {
-        this.readMode.button.addEventListener("click", (e) => {
+        ReadMode.button.addEventListener("click", (e) => {
             this.readModeActivate()
         })
+    }
+
+    listenForOverlayModeActivation() {
+        OverlayMode.button.addEventListener("click", (e) => {
+            this.overlayModeActivate()
+        })
+    }
+
+    listenForTextOverlayModeActivation() {
+        TextOverlayMode.button.addEventListener("click", (e) => {
+            this.textOverlayModeActivate()
+        })
+    }
+
+    readModeActivate() {
+        this.currentMode = "Read Mode"
+        this.resetToDefault()
+        ReadMode.turnOn()
+    }
+
+    createModeActivate() {
+        this.currentMode = "Create Mode"
+        this.resetToDefault()
+        CreateMode.turnOn()
+    }
+
+    editModeActivate() {
+        this.currentMode = "Edit Mode"
+        this.resetToDefault()
+        EditMode.turnOn()
+    }
+
+    overlayModeActivate() {
+        this.currentMode = "Overlay Mode"
+        this.resetToDefault()
+        OverlayMode.turnOn()
+    }
+
+    textOverlayModeActivate() {
+        this.currentMode = "Text Overlay Mode"
+        this.resetToDefault()
+        TextOverlayMode.turnOn()
+    }
+
+    resetToDefault() {
+        this.madeAllModesButtonsClickable()
+        this.hideAllModes()
     }
 
     checkIfSaveDataIsNotEmpty() {
@@ -47,38 +94,22 @@ class ModeSwitch {
         alert("You gotta have some text boxes first. Create some or load some")
     }
 
-    readModeActivate() {
-        this.resetToDefault()
-        this.readMode.turnOn()
-    }
-
-    createModeActivate() {
-        this.resetToDefault()
-        this.createMode.turnOn()
-    }
-
-    editModeActivate() {
-        this.resetToDefault()
-        this.editMode.turnOn()
-    }
-
-    resetToDefault() {
-        this.madeAllModesButtonsClickable()
-        this.hideAllModes()
-    }
-
     hideAllModes() {
-        this.readMode.container.style.display = "none"
-        this.editMode.container.style.display = "none"
-        this.createMode.mainCanvas.style.display = "none"
+        CreateMode.mainCanvas.style.display = "none"
+        EditMode.container.style.display = "none"
+        ReadMode.container.style.display = "none"
+        OverlayMode.container.style.display = "none"
+        TextOverlayMode.container.style.display = "none"
     }
 
     madeAllModesButtonsClickable() {
-        this.readMode.button.disabled = false
-        this.createMode.button.disabled = false
-        this.editMode.button.disabled = false    
+        CreateMode.button.disabled = false
+        EditMode.button.disabled = false    
+        ReadMode.button.disabled = false
+        OverlayMode.button.disabled = false
+        TextOverlayMode.button.disabled = false
     }
 
 }
 
-module.exports = new ModeSwitch(ReadMode, CreateMode, EditMode)
+module.exports = new ModeSwitch()

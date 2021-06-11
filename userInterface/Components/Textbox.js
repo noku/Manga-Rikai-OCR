@@ -1,5 +1,6 @@
 const ImagesDataCollection = require("./ImagesDataCollection.js")
 
+const RectangleOutline = require("./RectangleOutline.js")
 
 const TranslationTextContainer = require("./TranslationTextContainer.js")
 
@@ -31,6 +32,8 @@ class DivOutline {
         this.DivReadModeOutline.style.position = `absolute`
         this.DivReadModeOutline.id = `${this.texboxID}`
 
+        this.DivReadModeOutline.setAttribute('isTextboxOutlineOrNot', 'isTextboxOutline');
+
         this.DivReadModeOutline.style.left = `${this.dataArray[1]}px`
         this.DivReadModeOutline.style.top = `${this.dataArray[2]}px`
         this.DivReadModeOutline.style.width = `${this.dataArray[3]}px`
@@ -51,6 +54,9 @@ class DivOutline {
             let extracted = ImagesDataCollection.getCurrentSaveData().getExtractedText(`${this.texboxID}`)
             let translated = ImagesDataCollection.getCurrentSaveData().getTranslatedText(`${this.texboxID}`)
             TranslationTextContainer.displayText(extracted, translated)
+            copyToClipboard(extracted)
+            RectangleOutline.showImage(this.DivReadModeOutline.offsetLeft, this.DivReadModeOutline.offsetTop, this.DivReadModeOutline.offsetWidth-8, this.DivReadModeOutline.offsetHeight-8)
+
             this.changeBackgroundColor("rgba(255, 0, 0, 0.5)")
         })
         this.DivReadModeOutline.addEventListener("mouseout", (e) => this.changeBackgroundColor("rgba(255, 0, 0, 0)"))
@@ -61,13 +67,41 @@ class DivOutline {
         this.DivReadModeOutline.addEventListener("mouseover", (e) => {
             this.changeBorderColor("5px solid yellow")
             let extracted = ImagesDataCollection.getCurrentSaveData().getExtractedText(`${this.texboxID}`)
+            console.log("ImagesDataCollection.getCurrentSaveData()", ImagesDataCollection.getCurrentSaveData())
             let translated = ImagesDataCollection.getCurrentSaveData().getTranslatedText(`${this.texboxID}`)
             TranslationTextContainer.displayText(extracted, translated)
+            copyToClipboard(extracted)
+            RectangleOutline.showImage(this.DivReadModeOutline.offsetLeft, this.DivReadModeOutline.offsetTop, this.DivReadModeOutline.offsetWidth-8, this.DivReadModeOutline.offsetHeight-8)
+
             TranslationTextContainer.setTextboxIDForEachTextSection(`${this.texboxID}`)
             TranslationTextContainer.listenToTextEdit()
         })
         
         this.changeBackgroundColor("rgba(255, 0, 0, 0.5)")
+
+        this.DivReadModeOutline.addEventListener("mouseout", (e) => {
+            this.changeBorderColor("rgba(0, 0, 0, 0)")
+        })
+
+        return this.DivReadModeOutline
+    }
+
+    animateOverlayRectangle() {
+        this.DivReadModeOutline.addEventListener("mouseover", (e) => {
+            this.changeBorderColor("5px solid yellow")
+            let extracted = ImagesDataCollection.getCurrentSaveData().getExtractedText(`${this.texboxID}`)
+            console.log("ImagesDataCollection.getCurrentSaveData()", ImagesDataCollection.getCurrentSaveData())
+            let translated = ImagesDataCollection.getCurrentSaveData().getTranslatedText(`${this.texboxID}`)
+            TranslationTextContainer.displayText(extracted, translated)
+            copyToClipboard(extracted)
+            RectangleOutline.fillWithWhiteColor(this.DivReadModeOutline.offsetLeft, this.DivReadModeOutline.offsetTop, this.DivReadModeOutline.offsetWidth-8, this.DivReadModeOutline.offsetHeight-8)
+            //RectangleOutline.showImage(this.DivReadModeOutline.offsetLeft, this.DivReadModeOutline.offsetTop, this.DivReadModeOutline.offsetWidth-8, this.DivReadModeOutline.offsetHeight-8)
+
+            TranslationTextContainer.setTextboxIDForEachTextSection(`${this.texboxID}`)
+            TranslationTextContainer.listenToTextEdit()
+        })
+        
+        this.changeBackgroundColor("white")
 
         this.DivReadModeOutline.addEventListener("mouseout", (e) => {
             this.changeBorderColor("rgba(0, 0, 0, 0)")
@@ -110,6 +144,31 @@ class Textbox {
         return this.container
     }
 
+    returnOverlayTextbox() {
+        let DivReadModeOutline = new DivOutline(this.dataArray).animateOverlayRectangle()
+        this.container.appendChild(DivReadModeOutline)
+        return this.container
+    }
+
+}
+
+function copyToClipboard (text) {
+    if (navigator.clipboard) { // default: modern asynchronous API
+      return navigator.clipboard.writeText(text);
+    } else if (window.clipboardData && window.clipboardData.setData) {     // for IE11
+      window.clipboardData.setData('Text', text);
+      return Promise.resolve();
+    } else {
+      // workaround: create dummy input
+      const input = h('input', { type: 'text' });
+      input.value = text;
+      document.body.append(input);
+      input.focus();
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+      return Promise.resolve();
+    }
 }
 
 module.exports = Textbox

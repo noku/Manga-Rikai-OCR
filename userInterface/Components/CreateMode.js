@@ -25,8 +25,9 @@ class CreateMode {
     }
 
     turnOn() {
+        ImageCanvas.show()
+        OverlayCanvas.show()
         this.turnOffButtonColor()
-        this.showOverlayCanvas()
         this.removeAllThingsOnCanvas()
         this.listenToDrag()
     }
@@ -61,7 +62,7 @@ class CreateMode {
     }
 
     mouseDown(e) {
-        this.rect.startX = e.pageX - this.mainCanvas.offsetLeft;
+        this.rect.startX = e.pageX - this.mainCanvas.offsetLeft - 10;
         this.rect.startY = e.pageY - this.mainCanvas.offsetTop;
         this.drag = true;
     }

@@ -11,12 +11,8 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "html-webpack-plugin": "^4.4.1",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "circular-dependency-plugin": "^5.2.0"
+    "html2canvas": "^1.0.0-rc.7"
   }
 }

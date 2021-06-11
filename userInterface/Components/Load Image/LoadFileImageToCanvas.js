@@ -31,6 +31,7 @@ class LoadFileImageToCanvas {
             imageObj.onload =() => {
                 this.imageCanvas.resizeCanvas(imageObj.width, imageObj.height)
                 this.overlayCanvas.resizeCanvas(imageObj.width, imageObj.height)
+
                 this.imageCanvas.mainContext.drawImage(imageObj, 0, 0, this.imageCanvas.mainCanvas.width, this.imageCanvas.mainCanvas.height);
             };
         }

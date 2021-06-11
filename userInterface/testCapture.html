@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="html2canvas.min.js"></script>
+<script type="text/javascript" src="svg.min.js"></script>
+
+<style>
+#testContainer {
+    border: 5px solid blue;
+    height: 100px;
+    width: 100px;
+    word-wrap: break-word;
+}
+</style>
+</head>
+<body>
+
+<div id="testContainer">DLKFJDLKFJDLKFJDLFKDJFLKDJFDLKFJDKLFDJFLKDJFDLKFJ</div>
+
+<script>
+const capture = () => {
+  const body = document.querySelector('body');
+  body.id = 'capture';
+  html2canvas(document.querySelector("#testContainer")).then(canvas => {
+    document.body.appendChild(canvas);
+  }).then(() => {
+    var canvas = document.querySelector('canvas');
+    canvas.style.display = 'none';
+    var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    var a = document.createElement("a");
+    a.setAttribute('download', 'myImage.png');
+    a.setAttribute('href', image);
+    a.click();
+  });
+};
+
+//setTimeout(function(){ capture() }, 3000);
+console.log(html2canvas)
+console.log(SVG)
+
+var draw = SVG('canvas');
+
+var group = draw.group();
+
+var rect = group.rect(100, 100).fill('#f09');
+
+var text = group.text('AAA')
+.font({size: 30, family: 'Helvetica'})
+.center(0.5*rect.width(), 0.5*rect.height());
+
+group.move(100, 100);
+</script>
+
+</body>
+</html>

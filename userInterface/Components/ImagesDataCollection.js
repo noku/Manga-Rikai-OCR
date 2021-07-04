@@ -211,18 +211,19 @@ class ImagesDataCollection {
     }
 
     reset() {
-        this.currentImageData = 0 
+        this.currentImageData = 0
         this.listOfImagesData = []
         this.resetID()
     }
-    
+
 
     displayImage(imageFile) {
         let imageObj = new Image();
         imageObj.src = imageFile;
+
         imageObj.onload = () => {
-            ImageCanvas.resizeCanvas(imageObj.width, imageObj.height)
-            OverlayCanvas.resizeCanvas(imageObj.width, imageObj.height)
+            ImageCanvas.resizeCanvasFromImage(imageObj)
+            OverlayCanvas.resizeCanvasFromImage(imageObj)
             ImageCanvas.mainContext.drawImage(imageObj, 0, 0, ImageCanvas.mainCanvas.width, ImageCanvas.mainCanvas.height);
         };
     }

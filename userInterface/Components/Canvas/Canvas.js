@@ -5,7 +5,7 @@ class Canvas {
     }
 
     resizeCanvasFromImage(imageObj) {
-        let reservedSpacePercentage = 0.25 // control panel + right side
+        let reservedSpacePercentage = 0.18 // control panel + right side
         let availableWidth = window.outerWidth - (window.outerWidth * reservedSpacePercentage)
 
         let imageRatio = imageObj.height / imageObj.width;

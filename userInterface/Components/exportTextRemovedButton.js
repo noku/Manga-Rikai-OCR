@@ -29,10 +29,12 @@ class exportTextRemovedButton {
 
     async downloadImage() {
         let a = document.createElement('a');
-        let imageFile = await this.exportImage(ImagesDataCollection.getCurrentSaveData().imageFile)
+        let imageData = ImagesDataCollection.getCurrentSaveData();
+        let imageFile = await this.exportImage(imageData.imageFile)
         //let image = imageFile.replace("image/png", "image/octet-stream");
+
         a.setAttribute("href", imageFile);
-        a.setAttribute('download', `fileName.png`);
+        a.setAttribute('download', imageData.imageName);
         a.click()
     }
 
@@ -51,9 +53,11 @@ class exportTextRemovedButton {
 
         temporaryContext.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height)
 
-        this.fillRegionsWithWhite(temporaryContext, ImagesDataCollection.getCurrentSaveData().getListOfTextBoxes())
+        let imageData = ImagesDataCollection.getCurrentSaveData();
 
-        return temporaryCanvas.toDataURL("image/png");
+        this.fillRegionsWithWhite(temporaryContext, imageData.getListOfTextBoxes())
+
+        return temporaryCanvas.toDataURL(imageData.imageType);
     }
 
     fillRegionsWithWhite(thisCanvas, outlinesList) {

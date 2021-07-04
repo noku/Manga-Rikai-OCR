@@ -2,12 +2,14 @@ const OverlayCanvas = require("./Canvas/OverlayCanvas.js")
 const ImageCanvas = require("./Canvas/ImageCanvas.js")
 
 class ImageSaveData {
-    constructor(receivedImageFile, receivedFileName) {
+    constructor(receivedImageFile, receivedImageName, receivedFileName, receivedImageType) {
         //this.textBoxArray = []
         this.listOfTextBoxes = new Map()
         this.imageSizeArray = []
         this.imageFile = receivedImageFile
+        this.imageName = receivedImageName
         this.fileName = receivedFileName
+        this.imageType = receivedImageType
     }
 
     checkIfTextboxExists(textboxID) {
@@ -169,11 +171,11 @@ class ImagesDataCollection {
             let imageObj = new Image();
             let URLObj = window.URL || window.webkitURL;
             let imageFile = URLObj.createObjectURL(image);
-            let imageName = image.name.split('.')[0];
+            let imageFileName = image.name.split('.')[0];
 
             console.log("this.listOfImagesData", this.listOfImagesData)
             imageObj.src = imageFile
-            this.listOfImagesData.push(new ImageSaveData(imageFile, imageName))
+            this.listOfImagesData.push(new ImageSaveData(imageFile, image.name, imageFileName, image.type))
 
             imageObj.onload = () => {
                 this.listOfImagesData[i].saveImageSize(imageObj.width, imageObj.height)
@@ -194,7 +196,7 @@ class ImagesDataCollection {
         let imageObj = new Image();
         let URLObj = window.URL || window.webkitURL;
         let imageFile = URLObj.createObjectURL(imageData);
-        this.listOfImagesData.push(new ImageSaveData(imageFile, "noName"))
+        this.listOfImagesData.push(new ImageSaveData(imageFile, "noName.jpg", "image/jpeg"))
         imageObj.src = imageFile
         imageObj.onload =() => {
             this.listOfImagesData[0].saveImageSize(imageObj.width, imageObj.height)

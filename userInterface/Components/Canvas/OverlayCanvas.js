@@ -12,7 +12,7 @@ class OverlayCanvas extends Canvas {
         let imageObj = new Image();
         imageObj.src = imageFile;
         await imageObj.decode()
-        this.resizeCanvas(imageObj.width, imageObj.height)
+        this.resizeCanvasFromImage(imageObj)
         this.mainContext.drawImage(imageObj, 0, 0, this.mainCanvas.width, this.mainCanvas.height);
     }
 

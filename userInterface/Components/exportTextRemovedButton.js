@@ -51,17 +51,19 @@ class exportTextRemovedButton {
 
         temporaryContext.drawImage(imageObj, 0, 0, imageObj.width, imageObj.height)
 
-        this.fillRegionsWithWhite(temporaryContext, ImagesDataCollection.getCurrentSaveData().getListOfTextBoxes())
+        let diffRatio = imageObj.width / ImageCanvas.mainCanvas.width
+
+        this.fillRegionsWithWhite(temporaryContext, diffRatio, ImagesDataCollection.getCurrentSaveData().getListOfTextBoxes())
 
         return temporaryCanvas.toDataURL("image/png");
     }
 
-    fillRegionsWithWhite(thisCanvas, outlinesList) {
+    fillRegionsWithWhite(thisCanvas, diffRatio, outlinesList) {
         outlinesList.forEach(outline => {
-            let x = outline[1]
-            let y = outline[2]
-            let width = outline[3]
-            let height = outline[4]
+            let x = parseInt(outline[1] * diffRatio)
+            let y = parseInt(outline[2] * diffRatio)
+            let width = parseInt(outline[3] * diffRatio)
+            let height = parseInt(outline[4] * diffRatio)
 
             this.fillWithWhiteColor(thisCanvas, x, y, width, height)
         });

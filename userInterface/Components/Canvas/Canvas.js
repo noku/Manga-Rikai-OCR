@@ -4,6 +4,17 @@ class Canvas {
         this.mainContext = receivedContext
     }
 
+    resizeCanvasFromImage(imageObj) {
+        let reservedSpacePercentage = 0.25 // control panel + right side
+        let availableWidth = window.outerWidth - (window.outerWidth * reservedSpacePercentage)
+
+        let imageRatio = imageObj.height / imageObj.width;
+        let width = Math.min(availableWidth, imageObj.width)
+        let height = width * imageRatio;
+
+        this.resizeCanvas(width, height)
+    }
+
     resizeCanvas(width, height) {
         this.mainCanvas.width = width
         this.mainCanvas.height = height

@@ -48,8 +48,8 @@ class LoadDataFolder {
         let URLObj = window.URL || window.webkitURL;
         imageObj.src = URLObj.createObjectURL(imageFile);
         imageObj.onload =() => {
-            this.imageCanvas.resizeCanvas(imageObj.width, imageObj.height)
-            this.overlayCanvas.resizeCanvas(imageObj.width, imageObj.height)
+            this.imageCanvas.resizeCanvasFromImage(imageObj)
+            this.overlayCanvas.resizeCanvasFromImage(imageObj)
             this.imageCanvas.mainContext.drawImage(imageObj, 0, 0, this.imageCanvas.mainCanvas.width, this.imageCanvas.mainCanvas.height);
         };
     }

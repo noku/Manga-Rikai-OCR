@@ -8,5 +8,7 @@ backendServer/__pycache__
 backendServer/Python38
 backendServer/nodejs
 backendServer/node.exe
+backendServer/ImageTextExtraction/__pycache__
 
 dictionaryProgram(optional)
+.DS_Store

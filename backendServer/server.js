@@ -1,4 +1,4 @@
-const fs = require('fs') 
+const fs = require('fs')
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -55,7 +55,7 @@ async function extractTextFromImage(imageFile, res) {
     })
 }
 
-function sendMessageToServer(serverPort, thisContent, thisMessage) {  
+function sendMessageToServer(serverPort, thisContent, thisMessage) {
 	fetch(`http://localhost:${serverPort}/`, {
 			method: 'post',
 			body:    JSON.stringify({content: thisContent, message: thisMessage}),
@@ -87,7 +87,7 @@ app.post('/', async function (req, res) {
     if(body.message == "close everything") {
 		//res.send(JSON.stringify("done"))
 		process.exit()
-      //await sendMessageToServer(7575, "no content", "close server") 
+      //await sendMessageToServer(7575, "no content", "close server")
       // res.send(JSON.stringify({content: "no content", message: "node server closing"}))
       // process.exit()
     }

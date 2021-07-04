@@ -1,4 +1,5 @@
 const exec = require("child_process").exec
+const tesseract = require("node-tesseract-ocr")
 const log = console.debug
 
 function recognize(filename, config = {}) {
@@ -10,13 +11,15 @@ function recognize(filename, config = {}) {
   console.log(command)
   if (config.debug) log("command", command)
 
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
-      if (config.debug) log(stderr)
-      if (error) reject(error)
-      resolve(stdout)
-    })
-  })
+  return tesseract.recognize(`"${filename}"`, config)
+
+  // return new Promise((resolve, reject) => {
+  //   exec(command, (error, stdout, stderr) => {
+  //     if (config.debug) log(stderr)
+  //     if (error) reject(error)
+  //     resolve(stdout)
+  //   })
+  // })
 }
 
 function getOptions(config) {

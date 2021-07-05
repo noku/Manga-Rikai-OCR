@@ -23,7 +23,7 @@ class LoadImage {
     listenToFileInputEvent() {
         LoadFileImageToCanvas.inputElement.addEventListener("change", (e) => {
             this.hideInstructionsList()
-            ModeSwitch.createModeActivate()
+            ModeSwitch.editModeActivate()
             LoadFileImageToCanvas.start(e)
         })
     }

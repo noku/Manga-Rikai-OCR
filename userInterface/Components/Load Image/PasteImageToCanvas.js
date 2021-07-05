@@ -25,7 +25,7 @@ class PasteImageToCanvas {
         let URLObj = window.URL || window.webkitURL;
         imageObj.src = URLObj.createObjectURL(imageBlob);
         imageObj.onload = () => {
-            ModeSwitch.createModeActivate()
+            ModeSwitch.editModeActivate()
 
             this.imageCanvas.resizeCanvas(imageObj.width, imageObj.height)
             this.overlayCanvas.resizeCanvas(imageObj.width, imageObj.height)

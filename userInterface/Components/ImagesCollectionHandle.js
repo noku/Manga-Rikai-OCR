@@ -17,7 +17,6 @@ class ImageCollectionHandle {
     }
 
     selectNextImage() {
-        ModeSwitch.createModeActivate()
         ImagesDataCollection.initiateNextImage()
     }
 
@@ -28,7 +27,6 @@ class ImageCollectionHandle {
     }
 
     selectPreviousImage() {
-        ModeSwitch.createModeActivate()
         ImagesDataCollection.initiatePreviousImage()
     }
 

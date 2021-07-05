@@ -2,29 +2,21 @@ const ImagesDataCollection = require("./ImagesDataCollection.js")
 
 
 const ReadMode = require("./ReadMode.js")
-const CreateMode = require("./CreateMode.js")
 const EditMode = require("./EditMode.js")
 const OverlayMode = require("./OverlayMode.js")
 const TextOverlayMode = require("./TextOverlayMode.js")
 
 class ModeSwitch {
     constructor() {
-        this.currentMode = "Create Mode"
+        this.currentMode = "Edit Mode"
     }
 
 
     listen() {
-        this.listenForCreateModeActivation()
         this.listenForReadModeActivation()
         this.listenForEditModeActivation()
         this.listenForOverlayModeActivation() 
         this.listenForTextOverlayModeActivation() 
-    }
-
-    listenForCreateModeActivation() {
-        CreateMode.button.addEventListener("click", (e) => {
-            this.createModeActivate()
-        })
     }
 
     listenForEditModeActivation() {
@@ -55,12 +47,6 @@ class ModeSwitch {
         this.currentMode = "Read Mode"
         this.resetToDefault()
         ReadMode.turnOn()
-    }
-
-    createModeActivate() {
-        this.currentMode = "Create Mode"
-        this.resetToDefault()
-        CreateMode.turnOn()
     }
 
     editModeActivate() {
@@ -95,15 +81,13 @@ class ModeSwitch {
     }
 
     hideAllModes() {
-        CreateMode.mainCanvas.style.display = "none"
-        EditMode.container.style.display = "none"
+        EditMode.mainCanvas.style.display = "none"
         ReadMode.container.style.display = "none"
         OverlayMode.container.style.display = "none"
         TextOverlayMode.container.style.display = "none"
     }
 
     madeAllModesButtonsClickable() {
-        CreateMode.button.disabled = false
         EditMode.button.disabled = false    
         ReadMode.button.disabled = false
         OverlayMode.button.disabled = false

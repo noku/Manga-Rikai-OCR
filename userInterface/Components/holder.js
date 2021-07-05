@@ -2,29 +2,19 @@ const ImagesDataCollection = require("./ImagesDataCollection.js")
 
 
 const ReadMode = require("./ReadMode.js")
-const CreateMode = require("./CreateMode.js")
 const EditMode = require("./EditMode.js")
 
 
 class ModeSwitch {
-    constructor(ReadModeClass, CreateModeClass, EditModeClass) {
+    constructor(ReadModeClass, EditModeClass) {
         this.readMode = ReadModeClass
-        this.createMode = CreateModeClass
         this.editMode = EditModeClass
     }
 
 
     listen() {
-        this.listenForCreateModeActivation()
         this.listenForReadModeActivation()
         this.listenForEditModeActivation()
-    }
-
-
-    listenForCreateModeActivation() {
-        this.createMode.button.addEventListener("click", (e) => {
-            this.createModeActivate()
-        })
     }
 
     listenForEditModeActivation() {
@@ -62,11 +52,6 @@ class ModeSwitch {
         this.readMode.turnOn()
     }
 
-    createModeActivate() {
-        this.resetToDefault()
-        this.createMode.turnOn()
-    }
-
     editModeActivate() {
         this.resetToDefault()
         this.editMode.turnOn()
@@ -79,16 +64,14 @@ class ModeSwitch {
 
     hideAllModes() {
         this.readMode.container.style.display = "none"
-        this.editMode.container.style.display = "none"
-        this.createMode.mainCanvas.style.display = "none"
+        this.editMode.mainCanvas.style.display = "none"
     }
 
     madeAllModesButtonsClickable() {
         this.readMode.button.disabled = false
-        this.createMode.button.disabled = false
         this.editMode.button.disabled = false    
     }
 
 }
 
-module.exports = new ModeSwitch(ReadMode, CreateMode, EditMode)
+module.exports = new ModeSwitch(ReadMode, EditMode)
